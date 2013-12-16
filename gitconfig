@@ -1,0 +1,32 @@
+[user]
+	name = Patrick Stegmann
+	email = code@patrick-stegmann.de
+[alias]
+	rev-stat = log --stat -1
+	rev-diff = "!git diff $1^ $1"
+	whatsnew = "!git lg --since=yesterday"
+	standup = "!git whatsnew --author=$(git config user.email)"
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr by %an)%Creset' --abbrev-commit --date=relative
+	amend = commit --amend
+	cm = commit
+	co = checkout
+	br = branch
+	wdiff = diff --word-diff
+	superbranch = "!f() { git branch $1 && git checkout $1 && git config branch.$1.remote origin && git config branch.$1.rebase true && git config branch.$1.merge master; }; f"
+	rbc = rebase continue
+	feature-branch = !git superbranch features/$1
+	merge-feature = "!FEATURE_BRANCH=$(git rev-parse --abbrev-ref HEAD); git checkout master && git merge $FEATURE_BRANCH --squash && git commit"
+	feature-merge = "!FEATURE_BRANCH=$(git rev-parse --abbrev-ref HEAD); git checkout master && git merge $FEATURE_BRANCH --squash && git commit"
+	superclean = clean -x -d -f
+[format]
+	pretty = oneline
+[color]
+	ui = true
+[branch]
+	autosetupmerge = true
+	autosetuprebase = always
+[color "diff"]
+	meta = yellow
+	frag = magenta
+	old = red bold
+	new = green bold
