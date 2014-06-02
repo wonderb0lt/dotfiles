@@ -3,7 +3,7 @@
 	email = code@patrick-stegmann.de
 [alias]
 	rev-stat = log --stat -1
-	rev-diff = "!git diff $1^ $1"
+	rev-diff = "show"  # TIL
 	whatsnew = "!git lg --since=yesterday"
 	standup = "!git whatsnew --author=$(git config user.email)"
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr by %an)%Creset' --abbrev-commit --date=relative
