@@ -18,6 +18,8 @@
 	merge-feature = "!FEATURE_BRANCH=$(git rev-parse --abbrev-ref HEAD); git checkout master && git merge $FEATURE_BRANCH --squash && git commit"
 	feature-merge = "!FEATURE_BRANCH=$(git rev-parse --abbrev-ref HEAD); git checkout master && git merge $FEATURE_BRANCH --squash && git commit"
 	superclean = clean -x -d -f
+	ai = add -i
+	st = status
 [format]
 	pretty = oneline
 [color]
