@@ -1,6 +1,8 @@
 [user]
 	name = Patrick Stegmann
 	email = code@patrick-stegmann.de
+[core]
+	editor = nano
 [alias]
 	rev-stat = log --stat -1
 	rev-diff = "show"  # TIL
