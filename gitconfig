@@ -22,6 +22,7 @@
 	superclean = clean -x -d -f
 	ai = add -i
 	st = status
+	came = commit -am
 [format]
 	pretty = oneline
 [color]
