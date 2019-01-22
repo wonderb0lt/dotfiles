@@ -1,33 +1,44 @@
 #!/bin/bash -xe
 
-sudo apt-get install aptitude -y
-sudo aptitude update -y
-sudo aptitude upgrade -y
-sudo aptitude install -y fonts-liberation curl git zsh gnome-terminal gvfs-bin gconf2
+SCRIPT_DIR=$(dirname $(realpath $0))
+ZSH_CUSTOM_DIR=~/.oh-my-zsh/custom/
+
+# Basics
+sudo apt update -y && sudo aptitude upgrade -y
+sudo aptitude install -y curl wget git zsh most
+
+# oh-my-zsh fun
 if [ ! -e ~/.oh-my-zsh ]; then
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
+wget "https://raw.githubusercontent.com/caiogondim/bullet-train.zsh/master/bullet-train.zsh-theme" --output-document $ZSH_CUSTOM_DIR/themes/bullet-train.zsh-theme
+cp -a $SCRIPT_DIR/oh-my-zsh.conf.d/*.zsh $ZSH_CUSTOM_DIR/
 
-rm -Rf ~/.zshrc ~/.gitconfig
-ln -s $(dirname $(realpath $0))/zshrc ~/.zshrc
-ln -s $(dirname $(realpath $0))/gitconfig ~/.gitconfig
+chsh -s $(which zsh) "$USER"
 
-chsh
+# Fonts
 mkdir -p ~/git
 if [ ! -e ~/git/fonts ]; then
 	git clone https://github.com/powerline/fonts ~/git/fonts
-	~/git/fonts/install.sh
 fi
+~/git/fonts/install.sh
 
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb --output-document=/tmp/chrome.deb
-sudo dpkg -i /tmp/chrome.deb
-rm -Rf /tmp/chrome.deb
+# VSCode
+cp vscode-settings.json ~/.config/Code/User/settings.json
+code --install-extension "rokoroku.vscode-theme-darcula"
+code --install-extension "robertohuertasm.vscode-icons"
 
-wget https://atom.io/download/deb --output-document="/tmp/atom.deb"
-sudo dpkg -i /tmp/atom.deb
-rm -Rf /tmp/atom.deb
+cat << EOF
 
-wget https://bootstrap.pypa.io/get-pip.py --output-document=/tmp/pip.py
-sudo python /tmp/pip.py
+-------------------------------------------------------------------- 
+Manual steps:
+	* Adjust (Gnome) terminal:
+		Font: Fira Mono for Powerline Regular, 14
+		Foreground: #A9B7C6
+		Background: #2B2B2B
+		Palette: Tango
+	* Change VSCode stuff:
+		Ctrl+Shift+P in editor, "Color Theme" -> Darcula
+		^^^^^^^^^^^^^^^^^^^^^^, "File Icon Theme" -> VSCode icons
 
-sudo pip install virtualenv virtualenvwrapper
+EOF
